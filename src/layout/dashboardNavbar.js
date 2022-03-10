@@ -3,10 +3,12 @@ import { Icon } from '@iconify/react';
 import menu2Fill from '@iconify/icons-eva/menu-2-fill';
 // material
 import { alpha, styled } from '@mui/material/styles';
-import { Box, Stack, AppBar, Toolbar, IconButton, Typography } from '@mui/material';
+import { Box, Button, Stack, AppBar, Toolbar, IconButton, Typography } from '@mui/material';
 // components
 import { MHidden } from './@material-extend';
-//
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from '../pages/redux/actions/login/authAction';
 
 
 
@@ -41,6 +43,14 @@ DashboardNavbar.propTypes = {
 };
 
 export default function DashboardNavbar({ onOpenSidebar }) {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const handleLogout = (e) => {
+    e.preventDefault();
+    dispatch(logout());
+    navigate("/login", { replace: true });
+  }
+
   return (
     <RootStyle>
       <ToolbarStyle>
@@ -49,9 +59,13 @@ export default function DashboardNavbar({ onOpenSidebar }) {
             <Icon icon={menu2Fill} />
           </IconButton>
         </MHidden>
-        < Typography variant='h6' style={{color: '#000000'}}>
-          Dashboard
-        </Typography>
+        <Stack direction="row" alignItems="center">
+          <Typography variant='h6' style={{color: '#000000'}}>
+            Dashboard
+          </Typography>
+          <Button variant="text" style={{marginLeft:'800px'}} onClick={handleLogout}>Log out</Button>
+        </Stack>
+        
 
        
         <Box sx={{ flexGrow: 1 }} />

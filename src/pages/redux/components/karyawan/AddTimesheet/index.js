@@ -1,27 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import {
-    Box, 
     Card, 
     Button,
     CardContent, 
-    FormControl, 
-    Grid, 
+    FormControl,
+    Input, 
     InputLabel,
     MenuItem, 
     Stack, 
-    Table,
-    TableBody,
-    TableCell,
-    TableRow,
     TextField, 
     Typography} from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import CloseIcon from '@mui/icons-material/Close';
 import {makeStyles} from "@mui/styles";
 import { useDispatch, useSelector } from 'react-redux';
 import {addTimesheet, getListTimesheet, updateTimesheet, openModal} from '../../../actions/karyawan/timesheetAction';
 import {getListStatus} from '../../../actions/karyawan/statusAction';
-
+// import {addFile} from '../../../actions/karyawan/uploadFileAction';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -58,29 +51,6 @@ const project_id = [
   ];
 
 
-// const status_id = [
-//     {
-//       value: 1,
-//       label: 'Bekerja',
-//     },
-//     {
-//       value: 2,
-//       label: 'Cuti',
-//     },
-//     {
-//       value: 3,
-//       label: 'Sakit',
-//     },
-//     {
-//         value: 4,
-//         label: 'Izin',
-//     },
-//   ];
-
-
-
-
-
 
 
 function AddTimesheet() {
@@ -90,13 +60,13 @@ function AddTimesheet() {
 
     const {addTimesheetResult, detailTimesheetResult, updateTimesheetResult} = useSelector((state) => state.TimesheetReducer);
     const {getListStatusResult, getListStatusLoading, getListStatusError} = useSelector((state) => state.StatusReducer);
-
+    
 
     const [formData, setFormData] = useState({
         id:"",
-        project_id: "",
+        project_id: 0,
         date: "",
-        status_id: "",
+        status_id: 0,
         working_start: "00:00",
         working_end: "00:00",
         overtime_start: "00:00",
@@ -104,29 +74,48 @@ function AddTimesheet() {
         activity: ""
     });
 
-   
+    // const [fileInfo, setFileInfo] = useState({
+    //     id:"",
+    //     id_doctype:"",
+    // })
 
+    // const [file, setFile] = useState(null)
 
+    
     useEffect(()=>{
-        console.log("use effect get list status")
         dispatch(getListStatus())
-        // setStatus()
     }, [dispatch])
 
     // console.log("getlisttatus" + getListStatusResult)
 
     const handleChange = e => {
         let data = {...formData};
+       
         data[e.target.name] = e.target.value;
+        
         console.log(data)
         setFormData(data)
+        
     }
 
+
+    // const fileInfoHandler = e => {
+    //     let formFile = {...fileInfo};
+    //     formFile[e.target.name] = e.target.value;
+    //     setFileInfo(formFile)
+    // }
+
+    // const fileHandler = (e) => {
+    //     setFile(e.target.files[0])
+    // }
+
+ 
 
     const closeHandler = e => {
         e.preventDefault();
         dispatch(openModal(false))
     }
+    
 
     
 
@@ -163,7 +152,10 @@ function AddTimesheet() {
                 overtime_end: formData.overtime_end,
                 activity: formData.activity,
             }))
-            
+            // dispatch(addFile({
+            //     id_doctype: fileInfo.id_doctype,
+            //     // file: file,
+            // }))
         }
     }
 
@@ -268,45 +260,9 @@ function AddTimesheet() {
                         spacing={2}
                         noValidate
                         autoComplete="off"
+                        
                     >
-                    <FormControl variant="standard">
-                        <InputLabel shrink>
-                            Project Name
-                        </InputLabel>
-                        <TextField
-                            id="projectname"
-                            select
-                            size="small"
-                            label="Select Project"
-                            name="project_id"
-                            value={formData.project_id}
-                            onChange={handleChange}
-                            style={{marginTop:'25px'}} 
-                        >
-                            {project_id.map((option) => (
-                                <MenuItem key={option.value} value={option.value}>
-                                    {option.label}
-                                </MenuItem>
-                            ))}
-                        </TextField>
-                    </FormControl>
-                    
-                    <FormControl variant="standard">
-                        <InputLabel shrink>
-                            Date
-                        </InputLabel>
-                        <TextField 
-                            id="date" 
-                            name="date" 
-                            type="date" 
-                            variant="outlined" 
-                            size="small" 
-                            value={formData.date} 
-                            onChange={handleChange} 
-                            style={{marginTop:'25px'}}
-                        />
-                    </FormControl>
-                   
+ 
                     <FormControl variant="standard">
                         <InputLabel shrink>
                             Status
@@ -321,11 +277,7 @@ function AddTimesheet() {
                             onChange={handleChange}
                             style={{marginTop:'25px'}}
                         >
-                            {/* {getListStatusResult.map((option) => (
-                                <MenuItem key={option.status_id} value={option.status_id}>
-                                    {option.status_name}
-                                </MenuItem>
-                            ))} */}
+                            
 
                             {getListStatusResult ? (
                                 getListStatusResult.map((option) => {
@@ -345,90 +297,179 @@ function AddTimesheet() {
                                     }
                        </TextField>
                     </FormControl>
+
+                    {
+                        formData.status_id == 1 ? (
+                            <Stack>
+                                <FormControl variant="standard">
+                                    <InputLabel shrink>
+                                        Project Name
+                                    </InputLabel>
+                                    <TextField
+                                        id="projectname"
+                                        select
+                                        size="small"
+                                        label="Select Project"
+                                        name="project_id"
+                                        value={formData.project_id}
+                                        onChange={handleChange}
+                                        style={{marginTop:'20px', marginBottom:"10px"}} 
+                                    >
+                                        {project_id.map((option) => (
+                                            <MenuItem key={option.value} value={option.value}>
+                                                {option.label}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                </FormControl>
+                                <FormControl variant="standard">
+                                    <InputLabel shrink>
+                                        Date
+                                    </InputLabel>
+                                    <TextField 
+                                        id="date" 
+                                        name="date" 
+                                        type="date" 
+                                        variant="outlined" 
+                                        size="small" 
+                                        value={formData.date} 
+                                        onChange={handleChange} 
+                                        style={{marginTop:'20px'}}
+                                    />
+                                </FormControl>
+                   
+                                  
+                                <Stack direction="row" alignItems="center" justifyContent="space-between" mb={1} mt={1}>
+                                    <FormControl variant="standard">
+                                        <InputLabel shrink>
+                                            Working Hour
+                                        </InputLabel>
+                                        <TextField 
+                                            id="startworkinghour" 
+                                            name="working_start" 
+                                            type="time"
+                                            label="Start" 
+                                            variant="outlined"
+                                            size='small' 
+                                            value={formData.working_start} 
+                                            onChange={handleChange}
+                                            style={{marginTop:'20px'}}
+                                        />
+                                    </FormControl>
+                                    <TextField 
+                                            id="endworkinghour"
+                                            name="working_end"
+                                            type="time" 
+                                            label="End" 
+                                            size='small' 
+                                            variant="outlined" 
+                                            value={formData.working_end} 
+                                            onChange={handleChange}
+                                            style={{marginTop:'20px'}}
+                                    />
+                                    
+                                </Stack>
+
+
+                                <Stack direction="row" alignItems="center" justifyContent="space-between" mb={1} >
+                                    <FormControl variant="standard">
+                                        <InputLabel shrink>
+                                            Overtime
+                                        </InputLabel>
+                                        <TextField 
+                                            id="startovertime" 
+                                            name="overtime_start" 
+                                            label='Start'
+                                            type="time" 
+                                            size='small' 
+                                            variant="outlined" 
+                                            value={formData.overtime_start} 
+                                            onChange={handleChange}
+                                            style={{marginTop:'20px'}}
+                                        />
+                                    </FormControl>
+                                    
+                                    <TextField 
+                                        id="endovertime" 
+                                        name="overtime_end" 
+                                        type="time"
+                                        label="End"
+                                        size='small' 
+                                        variant="outlined" 
+                                        value={formData.overtime_end} 
+                                        onChange={handleChange}
+                                        style={{marginTop:'20px'}}
+                                    />
+                                </Stack>
+
+                                <FormControl variant="standard">
+                                    <InputLabel shrink>
+                                        Activity
+                                    </InputLabel>
+                                    <TextField 
+                                        id="activity" 
+                                        name="activity" 
+                                        type="text" 
+                                        multiline 
+                                        value={formData.activity} 
+                                        onChange={handleChange}
+                                        style={{marginTop:'20px'}}
+                                    />
+                                </FormControl>
+                            </Stack>
+                            
+                        ) : (
+                            <Stack>
+                                <FormControl variant="standard">
+                                    <InputLabel shrink>
+                                        Date
+                                    </InputLabel>
+                                    <TextField 
+                                        id="date" 
+                                        name="date" 
+                                        type="date" 
+                                        variant="outlined" 
+                                        size="small" 
+                                        value={formData.date} 
+                                        onChange={handleChange} 
+                                        style={{marginTop:'2 5px'}}
+                                    />
+                                </FormControl>
+                                {/* <FormControl variant="standard">
+                                    <InputLabel shrink>
+                                        Doc Type
+                                    </InputLabel>
+                                    <TextField
+                                        id="doctype"
+                                        select
+                                        size="small"
+                                        label="Select Doctype"
+                                        name="id_doctype"
+                                        value={fileInfo.id_doctype}
+                                        onChange={fileInfoHandler}
+                                        style={{marginTop:'20px', marginBottom:"10px"}} 
+                                    >
+                                        {id_doctype.map((option) => (
+                                            <MenuItem key={option.value} value={option.value}>
+                                                {option.label}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                </FormControl> */}
+                                
+                            </Stack>
+                            
+                        )
+                    }
+
                     
-                    
-                    <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5} mt={5}>
-                        <FormControl variant="standard">
-                            <InputLabel shrink>
-                                Working Hour
-                            </InputLabel>
-                            <TextField 
-                                id="startworkinghour" 
-                                name="working_start" 
-                                type="time"
-                                label="Start" 
-                                variant="outlined"
-                                size='small' 
-                                value={formData.working_start} 
-                                onChange={handleChange}
-                                style={{marginTop:'25px'}}
-                            />
-                        </FormControl>
-                        <TextField 
-                                id="endworkinghour"
-                                name="working_end"
-                                type="time" 
-                                label="End" 
-                                size='small' 
-                                variant="outlined" 
-                                value={formData.working_end} 
-                                onChange={handleChange}
-                                style={{marginTop:'25px'}}
-                        />
-                        
-                    </Stack>
-
-
-                    <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5} mt={5}>
-                        <FormControl variant="standard">
-                            <InputLabel shrink>
-                                Overtime
-                            </InputLabel>
-                            <TextField 
-                                id="startovertime" 
-                                name="overtime_start" 
-                                label='Start'
-                                type="time" 
-                                size='small' 
-                                variant="outlined" 
-                                value={formData.overtime_start} 
-                                onChange={handleChange}
-                                style={{marginTop:'25px'}}
-                            />
-                        </FormControl>
-                        
-                        <TextField 
-                            id="endovertime" 
-                            name="overtime_end" 
-                            type="time"
-                            label="End"
-                            size='small' 
-                            variant="outlined" 
-                            value={formData.overtime_end} 
-                            onChange={handleChange}
-                            style={{marginTop:'25px'}}
-                        />
-                    </Stack>
-
-                    <FormControl variant="standard">
-                        <InputLabel shrink>
-                            Activity
-                        </InputLabel>
-                        <TextField 
-                            id="activity" 
-                            name="activity" 
-                            type="text" 
-                            multiline 
-                            value={formData.activity} 
-                            onChange={handleChange}
-                            style={{marginTop:'25px'}}
-                        />
-                    </FormControl>
                     
                     <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5} mt={5}>
                         <Button variant='contained' onClick={handleSubmit}>Submit</Button>
                         <Button variant='contained' onClick={closeHandler}>Cancel</Button>
                     </Stack>
+                   
+                    
 
                     </Stack>
 

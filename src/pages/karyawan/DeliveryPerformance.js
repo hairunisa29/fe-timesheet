@@ -2,10 +2,13 @@ import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { styled } from '@mui/material/styles';
+import {
+ 
+  Typography
+} from '@mui/material';
 
 import DashboardNavbar from '../../layout/dashboardNavbar';
 import DashboardSidebar from '../../layout/dashboardSidebar';
-import {ListTimesheet} from '../redux/components';
 
 // ----------------------------------------------------------------------
 
@@ -33,7 +36,7 @@ const MainStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function DashboardKaryawan() {
+export default function DeliveryPerformance() {
   const [open, setOpen] = useState(false);
 
   return (
@@ -43,7 +46,9 @@ export default function DashboardKaryawan() {
       <MainStyle>
         <Outlet />
         {/* <MenuCardsKaryawan/> */}
-        <ListTimesheet/>
+        <Typography variant="h4" gutterBottom>
+            Delivery Performance
+        </Typography>
       </MainStyle>
     </RootStyle>
   );

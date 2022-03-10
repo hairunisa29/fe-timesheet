@@ -1,12 +1,12 @@
-import { Link as RouterLink } from "react-router-dom";
+// import { Link as RouterLink } from "react-router-dom";
 // material
 import { styled } from "@mui/material/styles";
-import { Card, Stack, Link, Container, Typography } from "@mui/material";
+import { Card, Container} from "@mui/material";
 // layouts
 // import AuthLayout from "../layouts/AuthLayout";
 // components
 // import Page from "../components/Page";
-import { MHidden } from "../../layout/@material-extend";
+// import { MHidden } from "../../layout/@material-extend";
 import { LoginForm } from "../redux/components";
 
 // ----------------------------------------------------------------------
@@ -55,22 +55,22 @@ export default function Login() {
 
       <Container maxWidth="sm">
         <ContentStyle>
-          <Stack sx={{ mb: 5, ml: 12 }}>
+          {/* <Stack sx={{ mb: 5, ml: 12 }}>
             <Typography gutterBottom>
               <img src="/prosigmaka.png" alt="login" />
             </Typography>
-          </Stack>
+          </Stack> */}
 
           <LoginForm />
 
-          <MHidden width="smUp">
+          {/* <MHidden width="smUp">
             <Typography variant="body2" align="center" sx={{ mt: 3 }}>
               Don’t have an account?&nbsp;
               <Link variant="subtitle2" component={RouterLink} to="register">
                 Get started
               </Link>
             </Typography>
-          </MHidden>
+          </MHidden> */}
         </ContentStyle>
       </Container>
     </RootStyle>

@@ -4,7 +4,7 @@ import {detailTimesheet, getListTimesheet} from '../../../actions/karyawan/times
 import AddTimesheet from '../AddTimesheet/index';
 import {openModal} from '../../../actions/karyawan/timesheetAction';
 import AddIcon from '@mui/icons-material/Add';
-import CloseIcon from '@mui/icons-material/Close';
+// import CloseIcon from '@mui/icons-material/Close';
 // import {openModal} from '../../actions/timesheetAction';
 
 import {
@@ -51,7 +51,6 @@ function ListTimesheet() {
 
     useEffect(()=>{
       // panggil action getlisttimesheet
-      console.log('1. use effect component did mount')
       dispatch(getListTimesheet());
 
     }, [dispatch])

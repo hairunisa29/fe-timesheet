@@ -12,7 +12,7 @@ import NavSection from './NavSection';
 import { MHidden } from './@material-extend';
 //
 import sidebarConfig from './SidebarConfig';
-import account from '../_mocks_/account';
+import Account from '../_mocks_/account';
 
 // ----------------------------------------------------------------------
 
@@ -64,7 +64,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
       </Box>
 
       <Box sx={{ mb: 5, mx: 2.5}}>
-        <Link underline="none" component={RouterLink} to="#">
+        {/* <Link underline="none" component={RouterLink} to="#">
           <AccountStyle>
             <Avatar src={account.photoURL} alt="photoURL" />
             <Box sx={{ ml: 2 }}>
@@ -76,7 +76,8 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
               </Typography>
             </Box>
           </AccountStyle>
-        </Link>
+        </Link> */}
+        <Account/>
       </Box>
 
       <NavSection navConfig={sidebarConfig} />

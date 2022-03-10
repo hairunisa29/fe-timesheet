@@ -1,15 +1,12 @@
 import React from 'react';
-import { Box, Card, CardContent, Container, Grid, Typography } from '@mui/material';
+import { Card, CardContent, Container, Grid, Typography } from '@mui/material';
 import {makeStyles} from "@mui/styles";
-import { Icon } from '@iconify/react';
 // import employeeIcon from '@iconify/icons-raphael/employee';
-import ListAltIcon from '@mui/icons-material/ListAlt';
-import { alpha, styled } from '@mui/material/styles';
 
 
 const useStyles = makeStyles((theme) => ({
   card: {
-      height: '200px',
+      height: '100px',
       width: '200px',
       display: 'flex',
       flexDirection: 'column',

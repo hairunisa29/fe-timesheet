@@ -4,7 +4,7 @@ export const GET_LIST_STATUS = "GET_LIST_STATUS";
 export const DETAIL_STATUS = "DETAIL_STATUS";
 
 export const getListStatus = () =>{
-    console.log('2. Masuk action getStatus')
+    // console.log('2. Masuk action getStatus')
     return(dispatch) => {
         // loading
         dispatch({
